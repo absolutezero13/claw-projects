@@ -1,93 +1,99 @@
 import { StatusBar } from 'expo-status-bar';
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-} from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 const meals = [
-  { label: 'Breakfast', name: 'Oatmeal with peanut butter', kcal: '432 kcal', variants: '32 variation' },
-  { label: 'Lunch', name: 'Chicken quesadilla', kcal: '545 kcal', variants: '24 variation' },
-  { label: 'Dinner', name: 'Greek salad', kcal: '281 kcal', variants: '8 variation' },
+  { type: 'Breakfast', title: 'Oatmeal with peanut butter', kcal: '432 kcal', variation: '32 variation' },
+  { type: 'Lunch', title: 'Chicken quesadilla', kcal: '545 kcal', variation: '24 variation' },
+  { type: 'Dinner', title: 'Greek salad', kcal: '281 kcal', variation: '8 variation' },
 ];
 
-const tabs = ['DAY 1', 'DAY 2', 'DAY 3'];
+const COLORS = {
+  ink: '#232E41',
+  muted: '#737D92',
+  lightMuted: '#96A1B2',
+  success: '#1CA576',
+  danger: '#FF6243',
+  card: '#FFFFFF',
+  peach: '#FFEACC',
+  bg: '#F4F8FC',
+  blueSoft: '#E6F0F7',
+  blueLine: '#1D70DB',
+};
 
 export default function App() {
   return (
     <SafeAreaView style={styles.safe}>
       <StatusBar style="dark" />
+
+      <View style={styles.haloA} />
+      <View style={styles.haloB} />
+
       <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={styles.headerRow}>
+        <View style={styles.header}>
           <Text style={styles.time}>6:36</Text>
-          <Text style={styles.start}>START TIME</Text>
+          <Text style={styles.startTime}>START TIME</Text>
         </View>
 
-        <Text style={styles.screenTitle}>Meal plan</Text>
+        <View style={styles.waterSectionTitleRow}>
+          <Text style={styles.waterTitle}>Water tracker</Text>
+          <Text style={styles.goal}>2L of daily goal</Text>
+        </View>
 
         <View style={styles.waterCard}>
-          <View style={styles.waterHead}>
-            <Text style={styles.waterTitle}>Water tracker</Text>
-            <Text style={styles.goal}>2L of daily goal</Text>
+          <View style={styles.waterStatsRow}>
+            <Text style={styles.mainMl}>5000 ml</Text>
+            <Text style={styles.rightMl}>2500 ml</Text>
           </View>
 
-          <Text style={styles.progress}>46% of your goal</Text>
-
-          <View style={styles.progressBg}>
+          <Text style={styles.progressLabel}>46% of your goal</Text>
+          <View style={styles.progressTrack}>
             <View style={styles.progressFill} />
-          </View>
-
-          <View style={styles.waterStats}>
-            <Text style={styles.mlPrimary}>5000 ml</Text>
-            <Text style={styles.mlSecondary}>2500 ml</Text>
           </View>
         </View>
 
-        <View style={styles.planCard}>
-          <View style={styles.weekRow}>
-            <Text style={styles.week}>Week 1</Text>
-            <Text style={styles.page}>1/2</Text>
+        <View style={styles.mealCard}>
+          <View style={styles.dayHeader}>
+            <Text style={styles.dayText}>Day 1</Text>
+            <Text style={styles.add}>add</Text>
           </View>
 
-          <View style={styles.tabsRow}>
-            {tabs.map((tab, i) => (
-              <View key={tab} style={[styles.tab, i === 0 && styles.tabActive]}>
-                <Text style={[styles.tabText, i === 0 && styles.tabTextActive]}>{tab}</Text>
-              </View>
-            ))}
-          </View>
-
-          <Text style={styles.dayTitle}>Day 1</Text>
-
-          {meals.map((meal) => (
-            <View key={meal.label} style={styles.mealCard}>
-              <View style={styles.mealTop}>
-                <Text style={styles.mealLabel}>{meal.label}</Text>
-                <Text style={styles.mealAdd}>add</Text>
-              </View>
-              <Text style={styles.mealName}>{meal.name}</Text>
+          {meals.map((meal, idx) => (
+            <View key={meal.type} style={[styles.mealRow, idx < meals.length - 1 && styles.mealDivider]}>
+              <Text style={styles.mealType}>{meal.type}</Text>
+              <Text style={styles.mealTitle}>{meal.title}</Text>
               <View style={styles.metaRow}>
                 <Text style={styles.kcal}>{meal.kcal}</Text>
-                <Text style={styles.variation}>{meal.variants}</Text>
+                <Text style={styles.variation}>{meal.variation}</Text>
               </View>
             </View>
           ))}
+
+          <View style={styles.day2Header}>
+            <Text style={styles.dayText}>Day 2</Text>
+            <Text style={styles.add}>add</Text>
+          </View>
+
+          <View style={styles.mealRow}>
+            <Text style={styles.mealType}>Breakfast</Text>
+            <Text style={styles.mealTitle}>Oatmeal with peanut butter</Text>
+            <View style={styles.metaRow}>
+              <Text style={styles.kcal}>432 kcal</Text>
+              <Text style={styles.variation}>32 variation</Text>
+            </View>
+          </View>
         </View>
 
-        <View style={styles.ctaCard}>
-          <Text style={styles.ctaEyebrow}>Personalized weekly plan</Text>
-          <Pressable style={styles.ctaButton}>
-            <Text style={styles.ctaText}>SEE PLAN</Text>
-          </Pressable>
+        <View style={styles.personalizedWrap}>
+          <Text style={styles.personalizedTitle}>Personalized plan</Text>
+          <View style={styles.seePlanPill}>
+            <Text style={styles.seePlanText}>SEE PLAN</Text>
+          </View>
         </View>
       </ScrollView>
 
-      <View style={styles.bottomNav}>
+      <View style={styles.bottomBar}>
         <Text style={styles.navActive}>Meal plan</Text>
-        <Text style={styles.navItem}>Grocery list (68)</Text>
+        <Text style={styles.navMuted}>Grocery list (68)</Text>
       </View>
     </SafeAreaView>
   );
@@ -96,217 +102,217 @@ export default function App() {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: '#f5f7fb',
+    backgroundColor: COLORS.bg,
+  },
+  haloA: {
+    position: 'absolute',
+    width: 280,
+    height: 280,
+    borderRadius: 140,
+    backgroundColor: '#EAF7DF',
+    top: 110,
+    left: -90,
+    opacity: 0.9,
+  },
+  haloB: {
+    position: 'absolute',
+    width: 220,
+    height: 220,
+    borderRadius: 110,
+    backgroundColor: '#E6F0F7',
+    top: 220,
+    right: -80,
+    opacity: 0.7,
   },
   container: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 24,
     paddingTop: 8,
-    paddingBottom: 100,
-    gap: 14,
+    paddingBottom: 120,
+    gap: 16,
   },
-  headerRow: {
+  header: {
+    height: 44,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   time: {
-    fontSize: 22,
-    fontWeight: '700',
-    color: '#111827',
+    color: COLORS.ink,
+    fontSize: 15,
+    fontWeight: '600',
   },
-  start: {
-    fontSize: 11,
-    color: '#9ca3af',
-    letterSpacing: 1,
-    fontWeight: '700',
+  startTime: {
+    color: COLORS.muted,
+    fontSize: 12,
+    fontWeight: '600',
+    letterSpacing: 0.5,
   },
-  screenTitle: {
-    fontSize: 28,
-    fontWeight: '800',
-    color: '#111827',
-  },
-  waterCard: {
-    backgroundColor: '#ffffff',
-    borderRadius: 20,
-    padding: 16,
-    shadowColor: '#0ea5e9',
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
-    elevation: 3,
-  },
-  waterHead: {
+  waterSectionTitleRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   waterTitle: {
-    fontSize: 17,
-    fontWeight: '700',
-    color: '#111827',
+    color: COLORS.ink,
+    fontSize: 16,
+    fontWeight: '500',
   },
   goal: {
-    fontSize: 12,
-    color: '#6b7280',
+    color: COLORS.muted,
+    fontSize: 14,
+    fontWeight: '400',
   },
-  progress: {
+  waterCard: {
+    backgroundColor: COLORS.card,
+    borderRadius: 18,
+    padding: 16,
+    shadowColor: '#1D70DB',
+    shadowOpacity: 0.07,
+    shadowRadius: 12,
+    elevation: 2,
+  },
+  waterStatsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+  },
+  mainMl: {
+    color: COLORS.ink,
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  rightMl: {
+    color: COLORS.lightMuted,
+    fontSize: 10,
+    fontWeight: '400',
+  },
+  progressLabel: {
     marginTop: 8,
-    color: '#374151',
-    fontSize: 13,
+    color: COLORS.muted,
+    fontSize: 12,
+    fontWeight: '400',
   },
-  progressBg: {
-    marginTop: 10,
-    height: 8,
-    borderRadius: 99,
-    backgroundColor: '#dbeafe',
+  progressTrack: {
+    marginTop: 8,
+    height: 6,
+    backgroundColor: COLORS.blueSoft,
+    borderRadius: 999,
     overflow: 'hidden',
   },
   progressFill: {
     width: '46%',
     height: '100%',
-    backgroundColor: '#3b82f6',
-  },
-  waterStats: {
-    marginTop: 12,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  mlPrimary: {
-    color: '#111827',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  mlSecondary: {
-    color: '#6b7280',
-    fontSize: 14,
-  },
-  planCard: {
-    backgroundColor: '#ffffff',
-    borderRadius: 20,
-    padding: 14,
-    gap: 10,
-  },
-  weekRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  week: {
-    fontWeight: '700',
-    color: '#111827',
-  },
-  page: {
-    color: '#9ca3af',
-    fontWeight: '600',
-  },
-  tabsRow: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  tab: {
-    flex: 1,
-    borderRadius: 10,
-    paddingVertical: 8,
-    backgroundColor: '#f3f4f6',
-    alignItems: 'center',
-  },
-  tabActive: {
-    backgroundColor: '#111827',
-  },
-  tabText: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: '#6b7280',
-  },
-  tabTextActive: {
-    color: '#ffffff',
-  },
-  dayTitle: {
-    fontSize: 18,
-    fontWeight: '800',
-    color: '#111827',
-    marginTop: 2,
+    backgroundColor: COLORS.blueLine,
+    borderRadius: 999,
   },
   mealCard: {
-    backgroundColor: '#f9fafb',
-    borderRadius: 14,
-    padding: 12,
-    gap: 4,
+    backgroundColor: COLORS.card,
+    borderRadius: 18,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
   },
-  mealTop: {
+  dayHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 8,
   },
-  mealLabel: {
-    fontSize: 13,
-    color: '#6b7280',
-    fontWeight: '700',
+  day2Header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+    marginTop: 8,
   },
-  mealAdd: {
+  dayText: {
+    color: COLORS.ink,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  add: {
+    color: COLORS.success,
     fontSize: 12,
-    color: '#10b981',
     fontWeight: '700',
   },
-  mealName: {
-    fontSize: 15,
-    color: '#111827',
-    fontWeight: '700',
+  mealRow: {
+    paddingVertical: 8,
   },
-  metaRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  mealDivider: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#EFF2F6',
+  },
+  mealType: {
+    color: COLORS.muted,
+    fontSize: 11,
+    fontWeight: '400',
+  },
+  mealTitle: {
+    color: COLORS.ink,
+    fontSize: 14,
+    fontWeight: '400',
     marginTop: 2,
   },
+  metaRow: {
+    marginTop: 3,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   kcal: {
-    fontSize: 12,
-    color: '#374151',
+    color: COLORS.muted,
+    fontSize: 8,
+    fontWeight: '600',
   },
   variation: {
-    fontSize: 12,
-    color: '#9ca3af',
+    color: COLORS.muted,
+    fontSize: 8,
+    fontWeight: '600',
   },
-  ctaCard: {
-    backgroundColor: '#e0f2fe',
+  personalizedWrap: {
+    backgroundColor: COLORS.peach,
     borderRadius: 18,
-    padding: 14,
+    padding: 12,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
-  ctaEyebrow: {
-    fontSize: 14,
-    color: '#0c4a6e',
-    fontWeight: '700',
+  personalizedTitle: {
+    color: COLORS.ink,
+    fontSize: 16,
+    fontWeight: '500',
   },
-  ctaButton: {
-    backgroundColor: '#0369a1',
-    borderRadius: 10,
-    paddingVertical: 9,
+  seePlanPill: {
+    backgroundColor: COLORS.card,
+    borderRadius: 99,
     paddingHorizontal: 14,
+    paddingVertical: 6,
   },
-  ctaText: {
-    color: '#fff',
-    fontWeight: '800',
-    fontSize: 12,
+  seePlanText: {
+    color: COLORS.danger,
+    fontSize: 10,
+    fontWeight: '600',
+    letterSpacing: 0.2,
   },
-  bottomNav: {
+  bottomBar: {
     position: 'absolute',
-    left: 16,
-    right: 16,
-    bottom: 12,
-    backgroundColor: '#111827',
-    borderRadius: 16,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: 87,
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#EDEFF2',
+    paddingHorizontal: 40,
+    paddingBottom: 26,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 14,
   },
   navActive: {
-    color: '#fff',
-    fontWeight: '800',
-  },
-  navItem: {
-    color: '#9ca3af',
-    fontWeight: '700',
+    color: COLORS.ink,
     fontSize: 12,
+    fontWeight: '600',
+  },
+  navMuted: {
+    color: COLORS.lightMuted,
+    fontSize: 12,
+    fontWeight: '600',
   },
 });
