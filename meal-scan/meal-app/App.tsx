@@ -1,27 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View, Pressable } from 'react-native';
+import { Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 const plans = [
-  { duration: '12\nmonths', badge: 'Best price', price: '$329.49', weekly: '$4.82 / week', active: true },
-  { duration: '6\nmonths', badge: 'Popular', price: '$329.49', weekly: '$4.82 / week', active: false },
-  { duration: '3\nmonths', badge: '', price: '$329.49', weekly: '$4.82 / week', active: false },
+  { duration: '12\nmonths', badge: 'Best price', badgeColor: '#D4EE79', active: true },
+  { duration: '6\nmonths', badge: 'Popular', badgeColor: '#E3D8FF', active: false },
+  { duration: '3\nmonths', badge: '', badgeColor: '#FFFFFF', active: false },
 ];
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.safe}>
+    <SafeAreaView style={styles.screen}>
       <StatusBar style="dark" />
 
-      <View style={styles.topAccent} />
+      <View style={styles.topLine} />
 
       <View style={styles.headerRow}>
         <Text style={styles.time}>16:36</Text>
         <Text style={styles.restore}>Restore</Text>
       </View>
 
-      <View style={styles.heroArtWrap}>
+      <View style={styles.heroArt}>
         <Text style={styles.close}>×</Text>
-        <Text style={styles.bird}>🐦</Text>
       </View>
 
       <View style={styles.plusPill}>
@@ -32,15 +31,21 @@ export default function App() {
 
       <View style={styles.cardsRow}>
         {plans.map((p) => (
-          <View key={p.duration} style={[styles.card, p.active && styles.cardActive]}>
+          <View key={p.duration} style={[styles.planCard, p.active && styles.planCardActive]}>
             <Text style={[styles.duration, p.active && styles.durationActive]}>{p.duration}</Text>
-            {!!p.badge && (
-              <View style={[styles.badge, p.active ? styles.badgeBest : styles.badgePopular]}>
-                <Text style={[styles.badgeText, p.active ? styles.badgeTextBest : styles.badgeTextPopular]}>{p.badge}</Text>
+
+            {p.badge ? (
+              <View style={[styles.badge, { backgroundColor: p.badgeColor }]}>
+                <Text style={[styles.badgeText, p.active ? styles.badgeTextBest : styles.badgeTextPopular]}>
+                  {p.badge}
+                </Text>
               </View>
+            ) : (
+              <View style={styles.badgeSpacer} />
             )}
-            <Text style={[styles.price, p.active && styles.priceActive]}>{p.price}</Text>
-            <Text style={[styles.weekly, p.active && styles.weeklyActive]}>{p.weekly}</Text>
+
+            <Text style={[styles.price, p.active && styles.priceActive]}>$329.49</Text>
+            <Text style={[styles.perWeek, p.active && styles.perWeekActive]}>$4.82 / week</Text>
           </View>
         ))}
       </View>
@@ -61,114 +66,108 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  safe: {
+  screen: {
     flex: 1,
-    backgroundColor: '#DFF2FF',
-    paddingHorizontal: 20,
+    backgroundColor: '#DFF0FA',
+    paddingHorizontal: 22,
   },
-  topAccent: {
+  topLine: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    height: 6,
-    backgroundColor: '#0E84C6',
+    height: 4,
+    backgroundColor: '#0D84C9',
   },
   headerRow: {
-    marginTop: 14,
+    marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   time: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '500',
     color: '#111111',
   },
   restore: {
     fontSize: 24,
+    color: '#2C3B46',
     fontWeight: '400',
-    color: '#333333',
   },
-  heroArtWrap: {
-    marginTop: 6,
-    height: 135,
-    borderRadius: 16,
-    backgroundColor: '#EAF6FF',
-    justifyContent: 'center',
-    alignItems: 'center',
+  heroArt: {
+    marginTop: 8,
+    height: 150,
+    borderRadius: 18,
+    backgroundColor: '#EAF7FF',
   },
   close: {
-    position: 'absolute',
-    left: 10,
-    top: 2,
+    paddingLeft: 8,
     fontSize: 34,
+    lineHeight: 38,
     color: '#2D3A46',
   },
-  bird: {
-    fontSize: 44,
-  },
   plusPill: {
+    marginTop: 8,
     alignSelf: 'center',
-    marginTop: 10,
-    backgroundColor: '#F9B23D',
+    backgroundColor: '#F8B13C',
     borderRadius: 999,
     paddingHorizontal: 20,
-    paddingVertical: 7,
+    paddingVertical: 6,
   },
   plusText: {
-    color: '#FFFFFF',
-    fontSize: 34,
+    fontSize: 30,
+    lineHeight: 32,
     fontWeight: '800',
-    letterSpacing: 1,
+    color: '#FFFFFF',
+    letterSpacing: 0.5,
   },
   title: {
-    marginTop: 14,
+    marginTop: 10,
     textAlign: 'center',
-    fontSize: 58,
-    lineHeight: 68,
     color: '#232E41',
+    fontSize: 49,
+    lineHeight: 56,
     fontWeight: '500',
   },
   cardsRow: {
-    marginTop: 22,
+    marginTop: 16,
     flexDirection: 'row',
     gap: 10,
   },
-  card: {
+  planCard: {
     flex: 1,
+    borderRadius: 16,
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
+    alignItems: 'center',
     paddingVertical: 10,
     paddingHorizontal: 8,
-    alignItems: 'center',
   },
-  cardActive: {
-    backgroundColor: '#F9A52F',
+  planCardActive: {
+    backgroundColor: '#F8A52F',
   },
   duration: {
-    fontSize: 11,
     textAlign: 'center',
-    color: '#2D3340',
+    color: '#232E41',
+    fontSize: 16,
+    lineHeight: 18,
     fontWeight: '600',
   },
   durationActive: {
     color: '#FFFFFF',
   },
   badge: {
-    borderRadius: 99,
-    marginTop: 6,
+    marginTop: 8,
+    borderRadius: 999,
     paddingHorizontal: 8,
-    paddingVertical: 3,
+    paddingVertical: 2,
   },
-  badgeBest: {
-    backgroundColor: '#D3F27B',
-  },
-  badgePopular: {
-    backgroundColor: '#E2D7FF',
+  badgeSpacer: {
+    marginTop: 8,
+    height: 18,
   },
   badgeText: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: '700',
   },
   badgeTextBest: {
@@ -179,40 +178,41 @@ const styles = StyleSheet.create({
   },
   price: {
     marginTop: 8,
-    fontSize: 10,
-    color: '#666F80',
+    fontSize: 13,
     fontWeight: '600',
+    color: '#6C7484',
   },
   priceActive: {
     color: '#FFFFFF',
   },
-  weekly: {
+  perWeek: {
     marginTop: 2,
-    fontSize: 6,
-    color: '#8B96A9',
+    fontSize: 8,
     fontWeight: '700',
+    color: '#8A95A7',
   },
-  weeklyActive: {
+  perWeekActive: {
     color: '#FFFFFF',
   },
   cancel: {
-    marginTop: 16,
+    marginTop: 12,
     textAlign: 'center',
     color: '#2E394A',
-    fontSize: 9,
+    fontSize: 12,
     fontWeight: '500',
   },
   cta: {
-    marginTop: 14,
-    backgroundColor: '#178E0C',
-    borderRadius: 999,
+    marginTop: 10,
     height: 58,
+    borderRadius: 999,
+    backgroundColor: '#208010',
     justifyContent: 'center',
     alignItems: 'center',
   },
   ctaText: {
     color: '#FFFFFF',
     fontSize: 34,
+    lineHeight: 36,
     fontWeight: '700',
   },
   footerLinks: {
@@ -223,12 +223,11 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   link: {
-    fontSize: 8,
     color: '#8B96A9',
-    fontWeight: '500',
+    fontSize: 9,
   },
   dot: {
     color: '#8B96A9',
-    fontSize: 7,
+    fontSize: 8,
   },
 });
