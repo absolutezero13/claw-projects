@@ -22,7 +22,7 @@ export default function App() {
         <View style={styles.heroArtWrap}>
           {/* decorative-only export (no text baked in) */}
           <Image source={require('./assets/paywall/hero-art.png')} style={styles.heroArt} resizeMode="cover" />
-          <Image source={require('./assets/paywall/close-icon.png')} style={styles.closeIcon} resizeMode="contain" />
+          <Text style={styles.closeText}>×</Text>
         </View>
 
         <View style={styles.plusPill}>
@@ -112,12 +112,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  closeIcon: {
+  closeText: {
     position: 'absolute',
     left: 10,
-    top: 10,
-    width: 18,
-    height: 18,
+    top: 8,
+    color: '#2C3B46',
+    fontSize: 24,
+    lineHeight: 24,
+    fontWeight: '400',
   },
   plusPill: {
     marginTop: 10,
