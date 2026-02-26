@@ -1,99 +1,66 @@
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Pressable } from 'react-native';
 
-const meals = [
-  { type: 'Breakfast', title: 'Oatmeal with peanut butter', kcal: '432 kcal', variation: '32 variation' },
-  { type: 'Lunch', title: 'Chicken quesadilla', kcal: '545 kcal', variation: '24 variation' },
-  { type: 'Dinner', title: 'Greek salad', kcal: '281 kcal', variation: '8 variation' },
+const plans = [
+  { id: '12', duration: '12\nmonths', badge: 'Best price', price: '$329.49', weekly: '$4.82/week', active: false },
+  { id: '6', duration: '6\nmonths', badge: 'Popular', price: '$329.49', weekly: '$4.82/week', active: true },
+  { id: '3', duration: '3\nmonths', badge: 'Best price', price: '$329.49', weekly: '$4.82/week', active: false },
 ];
-
-const COLORS = {
-  ink: '#232E41',
-  muted: '#737D92',
-  lightMuted: '#96A1B2',
-  success: '#1CA576',
-  danger: '#FF6243',
-  card: '#FFFFFF',
-  peach: '#FFEACC',
-  bg: '#F4F8FC',
-  blueSoft: '#E6F0F7',
-  blueLine: '#1D70DB',
-};
 
 export default function App() {
   return (
     <SafeAreaView style={styles.safe}>
       <StatusBar style="dark" />
 
-      <View style={styles.haloA} />
-      <View style={styles.haloB} />
-
-      <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={styles.header}>
-          <Text style={styles.time}>6:36</Text>
-          <Text style={styles.startTime}>START TIME</Text>
+      <View style={styles.hero}>
+        <View style={styles.topBar}>
+          <Text style={styles.time}>16:36</Text>
+          <Text style={styles.restore}>Restore</Text>
         </View>
 
-        <View style={styles.waterSectionTitleRow}>
-          <Text style={styles.waterTitle}>Water tracker</Text>
-          <Text style={styles.goal}>2L of daily goal</Text>
+        <View style={styles.plusPill}>
+          <Text style={styles.plusText}>Plus</Text>
         </View>
 
-        <View style={styles.waterCard}>
-          <View style={styles.waterStatsRow}>
-            <Text style={styles.mainMl}>5000 ml</Text>
-            <Text style={styles.rightMl}>2500 ml</Text>
-          </View>
+        <Text style={styles.heroTitle}>Take a big step to the healthy life</Text>
+      </View>
 
-          <Text style={styles.progressLabel}>46% of your goal</Text>
-          <View style={styles.progressTrack}>
-            <View style={styles.progressFill} />
-          </View>
+      <View style={styles.content}>
+        <Text style={styles.journeyTitle}>Start your{`\n`}weigh-loss journey{`\n`}now</Text>
+
+        <View style={styles.bullets}>
+          <Text style={styles.bullet}>• Unlimited chat with Coach</Text>
+          <Text style={styles.bullet}>• Personalized programs</Text>
+          <Text style={styles.bullet}>• 7 days free, then $2.99/week.</Text>
+          <Text style={styles.bullet}>• 30-days money back guarantee</Text>
         </View>
 
-        <View style={styles.mealCard}>
-          <View style={styles.dayHeader}>
-            <Text style={styles.dayText}>Day 1</Text>
-            <Text style={styles.add}>add</Text>
-          </View>
-
-          {meals.map((meal, idx) => (
-            <View key={meal.type} style={[styles.mealRow, idx < meals.length - 1 && styles.mealDivider]}>
-              <Text style={styles.mealType}>{meal.type}</Text>
-              <Text style={styles.mealTitle}>{meal.title}</Text>
-              <View style={styles.metaRow}>
-                <Text style={styles.kcal}>{meal.kcal}</Text>
-                <Text style={styles.variation}>{meal.variation}</Text>
+        <View style={styles.planRow}>
+          {plans.map((plan) => (
+            <View key={plan.id} style={[styles.planCard, plan.active && styles.planCardActive]}>
+              <Text style={styles.planDuration}>{plan.duration}</Text>
+              <View style={[styles.badge, plan.active && styles.badgeActive]}>
+                <Text style={[styles.badgeText, plan.active && styles.badgeTextActive]}>{plan.badge}</Text>
               </View>
+              <Text style={styles.price}>{plan.price}</Text>
+              <Text style={styles.weekly}>{plan.weekly}</Text>
             </View>
           ))}
-
-          <View style={styles.day2Header}>
-            <Text style={styles.dayText}>Day 2</Text>
-            <Text style={styles.add}>add</Text>
-          </View>
-
-          <View style={styles.mealRow}>
-            <Text style={styles.mealType}>Breakfast</Text>
-            <Text style={styles.mealTitle}>Oatmeal with peanut butter</Text>
-            <View style={styles.metaRow}>
-              <Text style={styles.kcal}>432 kcal</Text>
-              <Text style={styles.variation}>32 variation</Text>
-            </View>
-          </View>
         </View>
 
-        <View style={styles.personalizedWrap}>
-          <Text style={styles.personalizedTitle}>Personalized plan</Text>
-          <View style={styles.seePlanPill}>
-            <Text style={styles.seePlanText}>SEE PLAN</Text>
-          </View>
-        </View>
-      </ScrollView>
+        <Text style={styles.cancel}>Cancel anytime.</Text>
+      </View>
 
-      <View style={styles.bottomBar}>
-        <Text style={styles.navActive}>Meal plan</Text>
-        <Text style={styles.navMuted}>Grocery list (68)</Text>
+      <View style={styles.stickyArea}>
+        <Pressable style={styles.continueBtn}>
+          <Text style={styles.continueText}>Continue</Text>
+        </Pressable>
+
+        <View style={styles.linksRow}>
+          <Text style={styles.link}>Terms & Conditions</Text>
+          <Text style={styles.dot}>•</Text>
+          <Text style={styles.link}>Privacy Policy</Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -102,217 +69,174 @@ export default function App() {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: COLORS.bg,
+    backgroundColor: '#FCFBF5',
   },
-  haloA: {
-    position: 'absolute',
-    width: 280,
-    height: 280,
-    borderRadius: 140,
-    backgroundColor: '#EAF7DF',
-    top: 110,
-    left: -90,
-    opacity: 0.9,
-  },
-  haloB: {
-    position: 'absolute',
-    width: 220,
-    height: 220,
-    borderRadius: 110,
-    backgroundColor: '#E6F0F7',
-    top: 220,
-    right: -80,
-    opacity: 0.7,
-  },
-  container: {
+  hero: {
+    height: 350,
+    backgroundColor: '#E8F7FF',
     paddingHorizontal: 24,
-    paddingTop: 8,
-    paddingBottom: 120,
-    gap: 16,
+    paddingTop: 10,
   },
-  header: {
+  topBar: {
     height: 44,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   time: {
-    color: COLORS.ink,
     fontSize: 15,
     fontWeight: '600',
+    color: '#111111',
   },
-  startTime: {
-    color: COLORS.muted,
-    fontSize: 12,
-    fontWeight: '600',
-    letterSpacing: 0.5,
-  },
-  waterSectionTitleRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  waterTitle: {
-    color: COLORS.ink,
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  goal: {
-    color: COLORS.muted,
+  restore: {
     fontSize: 14,
-    fontWeight: '400',
-  },
-  waterCard: {
-    backgroundColor: COLORS.card,
-    borderRadius: 18,
-    padding: 16,
-    shadowColor: '#1D70DB',
-    shadowOpacity: 0.07,
-    shadowRadius: 12,
-    elevation: 2,
-  },
-  waterStatsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-  },
-  mainMl: {
-    color: COLORS.ink,
-    fontSize: 20,
-    fontWeight: '600',
-  },
-  rightMl: {
-    color: COLORS.lightMuted,
-    fontSize: 10,
-    fontWeight: '400',
-  },
-  progressLabel: {
-    marginTop: 8,
-    color: COLORS.muted,
-    fontSize: 12,
-    fontWeight: '400',
-  },
-  progressTrack: {
-    marginTop: 8,
-    height: 6,
-    backgroundColor: COLORS.blueSoft,
-    borderRadius: 999,
-    overflow: 'hidden',
-  },
-  progressFill: {
-    width: '46%',
-    height: '100%',
-    backgroundColor: COLORS.blueLine,
-    borderRadius: 999,
-  },
-  mealCard: {
-    backgroundColor: COLORS.card,
-    borderRadius: 18,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-  },
-  dayHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-  },
-  day2Header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 8,
-    marginTop: 8,
-  },
-  dayText: {
-    color: COLORS.ink,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  add: {
-    color: COLORS.success,
-    fontSize: 12,
-    fontWeight: '700',
-  },
-  mealRow: {
-    paddingVertical: 8,
-  },
-  mealDivider: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#EFF2F6',
-  },
-  mealType: {
-    color: COLORS.muted,
-    fontSize: 11,
-    fontWeight: '400',
-  },
-  mealTitle: {
-    color: COLORS.ink,
-    fontSize: 14,
-    fontWeight: '400',
-    marginTop: 2,
-  },
-  metaRow: {
-    marginTop: 3,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  kcal: {
-    color: COLORS.muted,
-    fontSize: 8,
-    fontWeight: '600',
-  },
-  variation: {
-    color: COLORS.muted,
-    fontSize: 8,
-    fontWeight: '600',
-  },
-  personalizedWrap: {
-    backgroundColor: COLORS.peach,
-    borderRadius: 18,
-    padding: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  personalizedTitle: {
-    color: COLORS.ink,
-    fontSize: 16,
     fontWeight: '500',
+    color: '#4999AC',
   },
-  seePlanPill: {
-    backgroundColor: COLORS.card,
-    borderRadius: 99,
-    paddingHorizontal: 14,
+  plusPill: {
+    alignSelf: 'flex-start',
+    marginTop: 16,
+    backgroundColor: '#232E41',
+    paddingHorizontal: 12,
     paddingVertical: 6,
+    borderRadius: 999,
   },
-  seePlanText: {
-    color: COLORS.danger,
-    fontSize: 10,
+  plusText: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: '700',
+    lineHeight: 24,
+  },
+  heroTitle: {
+    marginTop: 26,
+    color: '#214851',
+    fontSize: 32,
+    lineHeight: 37,
+    fontWeight: '500',
+    maxWidth: 300,
+  },
+  content: {
+    paddingHorizontal: 24,
+    marginTop: -28,
+  },
+  journeyTitle: {
+    color: '#232E41',
+    fontSize: 24,
+    lineHeight: 30,
+    fontWeight: '500',
+    marginBottom: 16,
+  },
+  bullets: {
+    gap: 8,
+  },
+  bullet: {
+    fontSize: 12,
+    fontWeight: '500',
+    color: '#232E41',
+  },
+  planRow: {
+    marginTop: 18,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 8,
+  },
+  planCard: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 8,
+    borderWidth: 1,
+    borderColor: '#EEF2F3',
+    alignItems: 'center',
+  },
+  planCardActive: {
+    borderColor: '#8166ED',
+    shadowColor: '#8166ED',
+    shadowOpacity: 0.18,
+    shadowRadius: 10,
+    elevation: 3,
+  },
+  planDuration: {
+    textAlign: 'center',
+    color: '#232E41',
+    fontSize: 16,
     fontWeight: '600',
-    letterSpacing: 0.2,
+    lineHeight: 18,
   },
-  bottomBar: {
+  badge: {
+    marginTop: 8,
+    backgroundColor: '#FFE35E',
+    borderRadius: 999,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+  },
+  badgeActive: {
+    backgroundColor: '#8166ED',
+  },
+  badgeText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#232E41',
+  },
+  badgeTextActive: {
+    color: '#FFFFFF',
+  },
+  price: {
+    marginTop: 10,
+    color: '#232E41',
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  weekly: {
+    marginTop: 2,
+    color: '#737D92',
+    fontSize: 8,
+    fontWeight: '600',
+  },
+  cancel: {
+    marginTop: 12,
+    textAlign: 'center',
+    color: '#737D92',
+    fontSize: 12,
+    fontWeight: '500',
+  },
+  stickyArea: {
     position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
-    height: 87,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#EDEFF2',
-    paddingHorizontal: 40,
-    paddingBottom: 26,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    height: 120,
+    paddingHorizontal: 24,
+    paddingTop: 12,
+    backgroundColor: 'rgba(252,251,245,0.97)',
+  },
+  continueBtn: {
+    height: 52,
+    borderRadius: 16,
+    backgroundColor: '#E36D3C',
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  navActive: {
-    color: COLORS.ink,
-    fontSize: 12,
+  continueText: {
+    color: '#FFFFFF',
+    fontSize: 16,
     fontWeight: '600',
   },
-  navMuted: {
-    color: COLORS.lightMuted,
-    fontSize: 12,
-    fontWeight: '600',
+  linksRow: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 8,
+  },
+  link: {
+    color: '#737D92',
+    fontSize: 10,
+    fontWeight: '400',
+  },
+  dot: {
+    color: '#96A1B2',
+    fontSize: 10,
   },
 });
