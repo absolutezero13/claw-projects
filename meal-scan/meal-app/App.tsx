@@ -2,65 +2,65 @@ import { StatusBar } from 'expo-status-bar';
 import { Image, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 const plans = [
-  { duration: '12\nmonths', badge: 'Best price', badgeColor: '#D4EE79', active: true },
-  { duration: '6\nmonths', badge: 'Popular', badgeColor: '#E3D8FF', active: false },
-  { duration: '3\nmonths', badge: '', badgeColor: '#FFFFFF', active: false },
+  { key: '12', duration: '12\nmonths', badge: 'Best price', badgeBg: '#D4EE79', active: true },
+  { key: '6', duration: '6\nmonths', badge: 'Popular', badgeBg: '#E3D8FF', active: false },
+  { key: '3', duration: '3\nmonths', badge: '', badgeBg: '#FFFFFF', active: false },
 ];
 
 export default function App() {
   return (
     <SafeAreaView style={styles.screen}>
       <StatusBar style="dark" />
-
       <View style={styles.topLine} />
 
-      <View style={styles.headerRow}>
+      <View style={styles.header}>
         <Text style={styles.time}>16:36</Text>
         <Text style={styles.restore}>Restore</Text>
       </View>
 
-      <View style={styles.heroArt}>
-        <Image source={require('./assets/paywall/hero-art.png')} style={styles.heroImage} resizeMode="cover" />
-        <Image source={require('./assets/paywall/close-icon.png')} style={styles.closeAsset} resizeMode="contain" />
-      </View>
+      <View style={styles.frame327}>
+        <View style={styles.heroArtWrap}>
+          {/* decorative-only export (no text baked in) */}
+          <Image source={require('./assets/paywall/hero-art.png')} style={styles.heroArt} resizeMode="cover" />
+          <Image source={require('./assets/paywall/close-icon.png')} style={styles.closeIcon} resizeMode="contain" />
+        </View>
 
-      <View style={styles.plusPill}>
-        <Text style={styles.plusText}>PLUS</Text>
-      </View>
+        <View style={styles.plusPill}>
+          <Text style={styles.plusText}>PLUS</Text>
+        </View>
 
-      <Text style={styles.title}>Take a big step to the{`\n`}healthy life</Text>
+        <Text style={styles.title}>Take a big step to the healthy life</Text>
 
-      <View style={styles.cardsRow}>
-        {plans.map((p) => (
-          <View key={p.duration} style={[styles.planCard, p.active && styles.planCardActive]}>
-            <Text style={[styles.duration, p.active && styles.durationActive]}>{p.duration}</Text>
+        <View style={styles.cardsRow}>
+          {plans.map((plan) => (
+            <View key={plan.key} style={[styles.planCard, plan.active && styles.planCardActive]}>
+              <Text style={[styles.duration, plan.active && styles.durationActive]}>{plan.duration}</Text>
 
-            {p.badge ? (
-              <View style={[styles.badge, { backgroundColor: p.badgeColor }]}>
-                <Text style={[styles.badgeText, p.active ? styles.badgeTextBest : styles.badgeTextPopular]}>
-                  {p.badge}
-                </Text>
-              </View>
-            ) : (
-              <View style={styles.badgeSpacer} />
-            )}
+              {plan.badge ? (
+                <View style={[styles.badge, { backgroundColor: plan.badgeBg }]}>
+                  <Text style={[styles.badgeText, plan.active ? styles.badgeTextBest : styles.badgeTextPopular]}>{plan.badge}</Text>
+                </View>
+              ) : (
+                <View style={styles.badgeSpacer} />
+              )}
 
-            <Text style={[styles.price, p.active && styles.priceActive]}>$329.49</Text>
-            <Text style={[styles.perWeek, p.active && styles.perWeekActive]}>$4.82 / week</Text>
-          </View>
-        ))}
-      </View>
+              <Text style={[styles.price, plan.active && styles.priceActive]}>$329.49</Text>
+              <Text style={[styles.week, plan.active && styles.weekActive]}>$4.82 / week</Text>
+            </View>
+          ))}
+        </View>
 
-      <Text style={styles.cancel}>Cancel anytime.</Text>
+        <Text style={styles.cancel}>Cancel anytime.</Text>
 
-      <Pressable style={styles.cta}>
-        <Text style={styles.ctaText}>Continue</Text>
-      </Pressable>
+        <Pressable style={styles.cta}>
+          <Text style={styles.ctaText}>Continue</Text>
+        </Pressable>
 
-      <View style={styles.footerLinks}>
-        <Text style={styles.link}>Terms & Conditions</Text>
-        <Text style={styles.dot}>•</Text>
-        <Text style={styles.link}>Privacy Policy</Text>
+        <View style={styles.footerLinks}>
+          <Text style={styles.link}>Terms & Conditions</Text>
+          <Text style={styles.dot}>•</Text>
+          <Text style={styles.link}>Privacy Policy</Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: '#DFF0FA',
-    paddingHorizontal: 24,
+    alignItems: 'center',
   },
   topLine: {
     position: 'absolute',
@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
     height: 4,
     backgroundColor: '#0D84C9',
   },
-  headerRow: {
+  header: {
+    width: 327,
     marginTop: 8,
     height: 44,
     flexDirection: 'row',
@@ -94,26 +95,29 @@ const styles = StyleSheet.create({
   },
   restore: {
     fontSize: 14,
-    color: '#2C3B46',
     fontWeight: '500',
+    color: '#2C3B46',
+  },
+  frame327: {
+    width: 327,
+  },
+  heroArtWrap: {
+    marginTop: 2,
+    height: 168,
+    borderRadius: 16,
+    overflow: 'hidden',
+    backgroundColor: '#E8F7FF',
   },
   heroArt: {
-    marginTop: 4,
-    height: 168,
-    borderRadius: 18,
-    overflow: 'hidden',
-    backgroundColor: '#EAF7FF',
-  },
-  heroImage: {
     width: '100%',
     height: '100%',
   },
-  closeAsset: {
+  closeIcon: {
     position: 'absolute',
     left: 10,
     top: 10,
-    width: 20,
-    height: 20,
+    width: 18,
+    height: 18,
   },
   plusPill: {
     marginTop: 10,
@@ -124,10 +128,10 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   plusText: {
+    color: '#FFFFFF',
     fontSize: 20,
     lineHeight: 24,
     fontWeight: '700',
-    color: '#FFFFFF',
     letterSpacing: 0.4,
   },
   title: {
@@ -145,12 +149,12 @@ const styles = StyleSheet.create({
   },
   planCard: {
     flex: 1,
-    minHeight: 128,
+    minHeight: 126,
     borderRadius: 16,
     backgroundColor: '#FFFFFF',
-    alignItems: 'center',
     paddingVertical: 10,
     paddingHorizontal: 8,
+    alignItems: 'center',
   },
   planCardActive: {
     backgroundColor: '#F8A52F',
@@ -187,20 +191,20 @@ const styles = StyleSheet.create({
   },
   price: {
     marginTop: 8,
+    color: '#6C7484',
     fontSize: 14,
     fontWeight: '500',
-    color: '#6C7484',
   },
   priceActive: {
     color: '#FFFFFF',
   },
-  perWeek: {
+  week: {
     marginTop: 2,
+    color: '#8A95A7',
     fontSize: 8,
     fontWeight: '700',
-    color: '#8A95A7',
   },
-  perWeekActive: {
+  weekActive: {
     color: '#FFFFFF',
   },
   cancel: {
