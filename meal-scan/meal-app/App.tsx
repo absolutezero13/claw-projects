@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 const plans = [
   { duration: '12\nmonths', badge: 'Best price', badgeColor: '#D4EE79', active: true },
@@ -20,7 +20,8 @@ export default function App() {
       </View>
 
       <View style={styles.heroArt}>
-        <Text style={styles.close}>×</Text>
+        <Image source={require('./assets/paywall/hero-art.png')} style={styles.heroImage} resizeMode="cover" />
+        <Image source={require('./assets/paywall/close-icon.png')} style={styles.closeAsset} resizeMode="contain" />
       </View>
 
       <View style={styles.plusPill}>
@@ -99,13 +100,19 @@ const styles = StyleSheet.create({
     marginTop: 8,
     height: 150,
     borderRadius: 18,
+    overflow: 'hidden',
     backgroundColor: '#EAF7FF',
   },
-  close: {
-    paddingLeft: 8,
-    fontSize: 34,
-    lineHeight: 38,
-    color: '#2D3A46',
+  heroImage: {
+    width: '100%',
+    height: '100%',
+  },
+  closeAsset: {
+    position: 'absolute',
+    left: 8,
+    top: 8,
+    width: 24,
+    height: 24,
   },
   plusPill: {
     marginTop: 8,
