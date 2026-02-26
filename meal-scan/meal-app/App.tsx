@@ -78,7 +78,7 @@ export default function App() {
         </View>
 
         <View style={styles.ctaCard}>
-          <Text style={styles.ctaEyebrow}>Personalized plan</Text>
+          <Text style={styles.ctaEyebrow}>Personalized weekly plan</Text>
           <Pressable style={styles.ctaButton}>
             <Text style={styles.ctaText}>SEE PLAN</Text>
           </Pressable>
