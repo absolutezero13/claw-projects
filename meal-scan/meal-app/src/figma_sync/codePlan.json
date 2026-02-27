@@ -1,0 +1,11 @@
+{
+  "components": [
+    {
+      "componentName": "Fasting01Timer02TimerV101InsightWaterTracker02FastingWindow0201Anabolic",
+      "figmaNodeId": "13:13058",
+      "filePath": "screens/Fasting01Timer02TimerV101InsightWaterTracker02FastingWindow0201AnabolicScreen.tsx",
+      "stableId": "db96cdda8481"
+    }
+  ],
+  "platform": "rn-expo"
+}
