@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
 
-export const Fasting01Timer02TimerV101InsightWaterTracker02FastingWindow0201Anabolic: React.FC = () => {
+const NutritionFigmaScreen: React.FC = () => {
   return (
     <View style={styles.root}>
       <View style={styles.rectangle2554} />
@@ -1387,4 +1387,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Fasting01Timer02TimerV101InsightWaterTracker02FastingWindow0201Anabolic;
+export default NutritionFigmaScreen;
